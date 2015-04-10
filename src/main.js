@@ -1,9 +1,22 @@
+var Task = React.createClass({
+  render: function() {
+    return (
+      React.DOM.div({className: 'task'},
+                    React.DOM.input({type: 'checkbox', name: 'task-completed', checked: this.props.isTaskCompleted}),
+                    React.DOM.span({}, this.props.children)
+                   )
+    );
+  }
+});
+
 var TaskList = React.createClass({
   render: function() {
     return (
       React.createElement('div', {className: 'taskList'},
-                          "I am a task list"
-      )
+                          React.createElement(Task, {isTaskCompleted: true}, "Sing a song"),
+                          React.createElement(Task, {isTaskCompleted: false}, "Dance")
+        )
+
     );
   }
 });
