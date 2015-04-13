@@ -1,8 +1,4 @@
-// Pretend this come from the backend
-var data = [
-  {isCompleted: true,  text: "Sing a song"},
-  {isCompleted: false, text: "Dance"}
-];
+var tasksEndpoint = 'http://localhost:4567/tasks.json';
 
 
 var TaskForm = React.createClass({
@@ -50,12 +46,26 @@ var TaskList = React.createClass({
 
 var TaskBox = React.createClass({
   displayName: 'TaskBox',
-
+  getInitialState: function() { //execute exactly once during the lifecycle of the component
+    return {data: []};
+  },
+  componentDidMount: function() { //called automatically by React when a component is rendered
+    $.ajax({
+      url: this.props.tasksUrl,
+      dataType: 'json',
+      success: function(data) {
+        this.setState({data: data});
+      },
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }
+    });
+  },
   render: function() {
     return (
       React.createElement('div', {className: "taskBox"},
         React.createElement('h1', null, "Tasks"),
-        React.createElement(TaskList, {data: data}),
+        React.createElement(TaskList, {data: this.state.data}),
         React.createElement(TaskForm, null)
 
       )
@@ -64,6 +74,6 @@ var TaskBox = React.createClass({
 });
 
 React.render(
-  React.createElement(TaskBox, {data: data}),
+  React.createElement(TaskBox, {tasksUrl: tasksEndpoint}),
   document.getElementById('container')
 );
