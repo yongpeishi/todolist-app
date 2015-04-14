@@ -1,15 +1,17 @@
-var tasksEndpoint = 'http://localhost:4567/tasks.json';
+
+var tasksEndpoint = 'http://localhost:4567';
 
 
 var TaskForm = React.createClass({
-  handleSubmit: function() {
+  handleSubmit: function(e) {
     e.preventDefault(); //prevent the browser's default action of submitting the form
+
     var taskText = React.findDOMNode(this.refs.text).value.trim();
     if (!taskText) {
       return;
     }
-    this.props.onTaskSubmit({text: taskText})
 
+    this.props.onTaskSubmit({text: taskText});
     React.findDOMNode(this.refs.text).value = '' ; //clear the field
     return;
   },
@@ -61,7 +63,7 @@ var TaskBox = React.createClass({
   displayName: 'TaskBox',
   loadTasksFromServer: function() {
     $.ajax({
-      url: this.props.tasksUrl,
+      url: this.props.tasksUrl + '/tasks.json',
       dataType: 'json',
       success: function(data) {
         this.setState({data: data});
@@ -72,7 +74,18 @@ var TaskBox = React.createClass({
     });
   },
   handleTaskSubmit: function(newTask) {
-    // TODO: submit to the server and refresh the list
+    $.ajax({
+      url: this.props.tasksUrl + '/tasks',
+      dataType: 'json',
+      type: 'POST',
+      data: JSON.stringify(newTask),
+      success: function(data) {
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
   },
   getInitialState: function() { //execute exactly once during the lifecycle of the component
     return {data: []};
