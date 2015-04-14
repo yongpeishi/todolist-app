@@ -17,14 +17,20 @@ post '/tasks' do
   request.body.rewind
   new_task = JSON.parse(request.body.read)
   new_task['isCompleted'] = false
-  tasks = tasks_from_file
-  tasks << new_task
-  tasks_to_file( tasks )
+
+  updated_tasks = add_task( new_task )
 
   content_type :json
-  tasks.to_json
+  updated_tasks.to_json
 end
 
+def add_task task
+  existing_tasks = tasks_from_file
+  updated_tasks = existing_tasks << task
+  tasks_to_file( updated_tasks )
+
+  updated_tasks
+end
 
 def tasks_from_file
   raw_json_data = File.read('tasks.json')
