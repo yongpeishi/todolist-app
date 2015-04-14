@@ -1,10 +1,10 @@
 [
   {
-    "isCompleted":true,
-    "text":"Sing a song"
+    "text": "This is an example of incomplete task",
+    "isCompleted": false
   },
   {
-    "isCompleted":false,
-    "text":"Dance"
+    "text": "This is an example of completed task",
+    "isCompleted": true  
   }
 ]
