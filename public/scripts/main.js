@@ -2,10 +2,23 @@ var tasksEndpoint = 'http://localhost:4567/tasks.json';
 
 
 var TaskForm = React.createClass({
+  handleSubmit: function() {
+    e.preventDefault(); //prevent the browser's default action of submitting the form
+    var taskText = React.findDOMNode(this.refs.text).value.trim();
+    if (!taskText) {
+      return;
+    }
+    this.props.onTaskSubmit({text: taskText})
+
+    React.findDOMNode(this.refs.text).value = '' ; //clear the field
+    return;
+  },
+
   render: function() {
     return (
-      React.createElement('div', {className: "taskForm"},
-                          "I am a form"
+      React.DOM.form( {className: "taskForm", onSubmit: this.handleSubmit},
+        React.DOM.input( {type: 'text', ref: 'text'}),
+        React.DOM.input( {type: 'submit', value: 'Add task'})
       )
     );
   }
@@ -46,10 +59,7 @@ var TaskList = React.createClass({
 
 var TaskBox = React.createClass({
   displayName: 'TaskBox',
-  getInitialState: function() { //execute exactly once during the lifecycle of the component
-    return {data: []};
-  },
-  componentDidMount: function() { //called automatically by React when a component is rendered
+  loadTasksFromServer: function() {
     $.ajax({
       url: this.props.tasksUrl,
       dataType: 'json',
@@ -61,12 +71,21 @@ var TaskBox = React.createClass({
       }.bind(this)
     });
   },
+  handleTaskSubmit: function(newTask) {
+    // TODO: submit to the server and refresh the list
+  },
+  getInitialState: function() { //execute exactly once during the lifecycle of the component
+    return {data: []};
+  },
+  componentDidMount: function() {  //called automatically by React when a component is rendered
+    this.loadTasksFromServer();
+  },
   render: function() {
     return (
       React.createElement('div', {className: "taskBox"},
         React.createElement('h1', null, "Tasks"),
         React.createElement(TaskList, {data: this.state.data}),
-        React.createElement(TaskForm, null)
+        React.createElement(TaskForm, { onTaskSubmit: this.handleTaskSubmit })
 
       )
     );
