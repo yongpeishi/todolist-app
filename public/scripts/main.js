@@ -1,10 +1,8 @@
-
 var tasksEndpoint = 'http://localhost:4567';
-
 
 var TaskForm = React.createClass({
   handleSubmit: function(e) {
-    e.preventDefault(); //prevent the browser's default action of submitting the form
+    e.preventDefault();
 
     var taskText = React.findDOMNode(this.refs.text).value.trim();
     if (!taskText) {
@@ -12,7 +10,7 @@ var TaskForm = React.createClass({
     }
 
     this.props.onTaskSubmit({text: taskText});
-    React.findDOMNode(this.refs.text).value = '' ; //clear the field
+    React.findDOMNode(this.refs.text).value = ''; //clear the field
     return;
   },
 
@@ -38,13 +36,14 @@ var Task = React.createClass({
   render: function() {
     return (
       React.DOM.div({className: 'task'},
-                    React.DOM.input({type: 'checkbox',
-                                     name: 'task-completed',
-                                     checked: this.props.isTaskCompleted,
-                                     onChange: this.updateTaskCompletion
-                                     }),
-                    React.DOM.span({}, this.props.children)
-                   )
+        React.DOM.input({
+          type: 'checkbox',
+          name: 'task-completed',
+          checked: this.props.isTaskCompleted,
+          onChange: this.updateTaskCompletion
+        }),
+        React.DOM.span({}, this.props.children)
+       )
     );
   }
 });
@@ -99,7 +98,6 @@ var TaskBox = React.createClass({
         React.createElement('h1', null, "Tasks"),
         React.createElement(TaskList, {data: this.state.data}),
         React.createElement(TaskForm, { onTaskSubmit: this.handleTaskSubmit })
-
       )
     );
   }
