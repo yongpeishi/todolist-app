@@ -30,17 +30,33 @@ var TaskBox = React.createClass({
       }.bind(this)
     });
   },
-  getInitialState: function() { //execute exactly once during the lifecycle of the component
-    return {data: []};
+
+  updateTask: function(taskId) {
+    allTask = this.state.data;
+    current = allTask[taskId].isCompleted;
+    allTask[taskId].isCompleted = !current;
+
+    this.setState(allTask);
   },
+
+  getInitialState: function() { //execute exactly once during the lifecycle of the component
+    return { data: [] };
+  },
+
   componentDidMount: function() {  //called automatically by React when a component is rendered
     this.loadTasksFromServer();
   },
+
   render: function() {
+
+    var completedTasks = _.values(this.state.data).filter( function(task) {return task.isCompleted;});
+
     return (
       React.createElement('div', {className: "taskBox"},
         React.createElement('h1', null, "Tasks"),
-        React.createElement(TaskList, {data: this.state.data}),
+        React.createElement('span', null, "Completed Tasks: " + completedTasks.length),
+
+        React.createElement(TaskList, { data: this.state.data, toggleTaskCompletion: this.updateTask }),
         React.createElement(TaskForm, { onTaskSubmit: this.handleTaskSubmit })
       )
     );
