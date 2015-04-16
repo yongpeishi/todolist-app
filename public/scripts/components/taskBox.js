@@ -15,6 +15,7 @@ var TaskBox = React.createClass({
       }.bind(this)
     });
   },
+
   handleTaskSubmit: function(newTask) {
     $.ajax({
       url: this.props.tasksUrl + '/tasks',

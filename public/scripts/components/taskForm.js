@@ -1,26 +1,31 @@
 var TaskForm = React.createClass({
+  getInitialState: function() {
+      return {text: ""};
+  },
+
+  setText: function(e) {
+    this.setState({text: e.target.value});
+  },
+
   handleSubmit: function(e) {
     e.preventDefault();
 
-    var taskText = React.findDOMNode(this.refs.text).value.trim();
-    if (!taskText) {
-      return;
-    }
+    var trimmedText = this.state.text.trim();
 
-    this.props.onTaskSubmit({text: taskText});
-    React.findDOMNode(this.refs.text).value = ''; //clear the field
-    return;
+    if(trimmedText) {
+      this.props.onTaskSubmit({text: trimmedText});
+      this.setState({text: ""});
+    }
   },
 
   render: function() {
     return (
       React.DOM.form( {className: "taskForm", onSubmit: this.handleSubmit},
-        React.DOM.input( {type: 'text', ref: 'text'}),
+        React.DOM.input( {type: 'text', value: this.state.text, onChange: this.setText}),
         React.DOM.input( {type: 'submit', value: 'Add task'})
       )
     );
   }
 });
-
 
 module.exports = TaskForm;
