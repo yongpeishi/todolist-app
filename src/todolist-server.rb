@@ -26,7 +26,9 @@ end
 
 def add_task task
   existing_tasks = tasks_from_file
-  updated_tasks = existing_tasks << task
+
+  id = existing_tasks.last.key + 1
+  updated_tasks = existing_tasks << {id => task}
   tasks_to_file( updated_tasks )
 
   updated_tasks
