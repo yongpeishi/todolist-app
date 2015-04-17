@@ -25,7 +25,7 @@ var TaskBox = React.createClass({
       type: 'POST',
       data: JSON.stringify(newTask),
       success: function(data) {
-        this.setState({data: data});
+        this.loadTasksFromServer();
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
@@ -57,12 +57,7 @@ var TaskBox = React.createClass({
   },
 
   getInitialState: function() { //execute exactly once during the lifecycle of the component
-    return { data: [] };
-  },
-
-  // probably dont need this
-  componentDidMount: function() {  //called automatically by React when a component is rendered
-    this.loadTasksFromServer();
+    return { data: this.loadTasksFromServer() };
   },
 
   render: function() {
