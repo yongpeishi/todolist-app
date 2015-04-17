@@ -43,7 +43,7 @@ var TaskBox = React.createClass({
     ];
 
     $.ajax({
-      url: this.props.tasksUrl + '/tasks/' + task.taskId,
+      url: this.props.tasksUrl + '/tasks',
       dataType: 'text',
       type: 'PATCH',
       data: JSON.stringify(patchData),

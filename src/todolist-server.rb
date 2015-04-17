@@ -24,7 +24,7 @@ post '/tasks' do
   updated_tasks.to_json
 end
 
-patch '/tasks/:id' do
+patch '/tasks' do
   request.body.rewind
   patchData = JSON.parse(request.body.read)
 

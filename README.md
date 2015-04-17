@@ -21,7 +21,7 @@ These are the general setup steps. Instructions are to be updated soon.
 2. Client side: Run `npm install` to get node modules.
 3. You will need a file *tasks.json* in the root directory. An example (*tasks.json.sample*) is provided.
 4. Start the server by `ruby src/todolist-server.rb` at the project directory. Server will run on `http://localhost:4567`.
-5. Run watchify by `watchify public/scripts/main.js -o publiscripts/bundle.js`.
+5. Run watchify by `watchify public/scripts/main.js -o public/scripts/bundle.js`.
 
 
 
