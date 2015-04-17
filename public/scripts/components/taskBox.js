@@ -34,16 +34,33 @@ var TaskBox = React.createClass({
   },
 
   updateTask: function(task) {
-    allTask = this.state.data;
+    var patchData = [
+      {
+        "op": "replace",
+        "path": "/" + task.taskId + "/isCompleted",
+        "value": task.isCompleted
+      }
+    ];
 
-    allTask[task.taskId] = task;
-    this.setState(allTask);
+    $.ajax({
+      url: this.props.tasksUrl + '/tasks/' + task.taskId,
+      dataType: 'text',
+      type: 'PATCH',
+      data: JSON.stringify(patchData),
+      success: function() {
+        this.loadTasksFromServer();
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
   },
 
   getInitialState: function() { //execute exactly once during the lifecycle of the component
     return { data: [] };
   },
 
+  // probably dont need this
   componentDidMount: function() {  //called automatically by React when a component is rendered
     this.loadTasksFromServer();
   },
