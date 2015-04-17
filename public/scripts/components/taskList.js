@@ -7,12 +7,11 @@ var TaskList = React.createClass({
   render: function() {
       var tl = this;
 
-    var taskNodes = _.map(this.props.data, function(task, key) {
+    var taskNodes = _.values(this.props.data).map(function(task) {
       return React.createElement(Task,
-        {taskId: key,
-          isTaskCompleted: task.isCompleted,
-          toggleTaskCompletion: tl.props.toggleTaskCompletion},
-          task.text);
+        { task: task,
+          toggleTaskCompletion: tl.props.toggleTaskCompletion
+        });
     });
 
     return React.createElement('div', {className: 'taskList'}, taskNodes);

@@ -1,10 +1,11 @@
 {
-  { 
+  "1": { 
     "taskId": 1,
     "text": "This is an example of incomplete task",
     "isCompleted": false
   },
-  { "taskId": 2,
+  "2": { 
+    "taskId": 2,
     "text": "This is an example of completed task",
     "isCompleted": true
   }

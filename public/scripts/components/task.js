@@ -1,9 +1,14 @@
-var _ = require('underscore');
-
 var Task = React.createClass({
 
-  updateTaskCompletion: function(taskId) {
-    this.props.toggleTaskCompletion(taskId);
+  updateTaskCompletion: function() {
+    var id = this.props.task.taskId;
+    var taskToUpdate = {
+      taskId: this.props.task.taskId,
+      isCompleted: !(this.props.task.isCompleted),
+      text: this.props.task.text
+    }
+
+    this.props.toggleTaskCompletion(taskToUpdate);
   },
 
   render: function() {
@@ -12,10 +17,10 @@ var Task = React.createClass({
         React.DOM.input({
           type: 'checkbox',
           name: 'task-completed',
-          checked: this.props.isTaskCompleted,
-          onChange: _.partial( this.updateTaskCompletion, this.props.taskId )
+          checked: this.props.task.isCompleted,
+          onChange: this.updateTaskCompletion
         }),
-        React.DOM.span({}, this.props.children)
+        React.DOM.span({}, this.props.task.text)
        )
     );
   }

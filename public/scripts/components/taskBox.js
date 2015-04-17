@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 var TaskList = require('./taskList');
 var TaskForm = require('./taskForm');
 
@@ -31,11 +33,10 @@ var TaskBox = React.createClass({
     });
   },
 
-  updateTask: function(taskId) {
+  updateTask: function(task) {
     allTask = this.state.data;
-    current = allTask[taskId].isCompleted;
-    allTask[taskId].isCompleted = !current;
 
+    allTask[task.taskId] = task;
     this.setState(allTask);
   },
 
