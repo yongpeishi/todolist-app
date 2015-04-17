@@ -33,7 +33,7 @@ var TaskBox = React.createClass({
     });
   },
 
-  updateTask: function(task) {
+  updateTaskCompletion: function(task) {
     var patchData = [
       {
         "op": "replace",
@@ -74,7 +74,7 @@ var TaskBox = React.createClass({
         React.createElement('h1', null, "Tasks"),
         React.createElement('span', null, "Completed Tasks: " + completedTasks.length),
 
-        React.createElement(TaskList, { data: this.state.data, toggleTaskCompletion: this.updateTask }),
+        React.createElement(TaskList, { data: this.state.data, toggleTaskCompletion: this.updateTaskCompletion }),
         React.createElement(TaskForm, { onTaskSubmit: this.handleTaskSubmit })
       )
     );
