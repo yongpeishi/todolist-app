@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'json'
+require 'hana'
 
 set :public_folder, 'public/'
 
@@ -22,6 +23,18 @@ post '/tasks' do
 
   content_type :json
   updated_tasks.to_json
+end
+
+patch '/tasks/:id' do
+  request.body.rewind
+  patchData = JSON.parse(request.body.read)
+
+  patch = Hana::Patch.new(patchData)
+  updated_tasks = patch.apply(tasks_from_file)
+  tasks_to_file(updated_tasks)
+
+  status 200
+  body 'OK'
 end
 
 def add_task task
