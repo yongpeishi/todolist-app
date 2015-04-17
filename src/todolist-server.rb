@@ -16,10 +16,9 @@ end
 
 post '/tasks' do
   request.body.rewind
-  new_task = JSON.parse(request.body.read)
-  new_task['isCompleted'] = false
+  task_details = JSON.parse(request.body.read)
 
-  updated_tasks = add_task( new_task )
+  updated_tasks = add_task( task_details )
 
   content_type :json
   updated_tasks.to_json
@@ -37,14 +36,17 @@ patch '/tasks/:id' do
   body 'OK'
 end
 
-def add_task task
-  existing_tasks = tasks_from_file
+def add_task task_details
+  allTasks = tasks_from_file
 
-  id = existing_tasks.last.key + 1
-  updated_tasks = existing_tasks << {id => task}
-  tasks_to_file( updated_tasks )
+  new_task_id = allTasks.keys.sort.last.to_i + 1
+  task_details['isCompleted'] = false
+  task_details['taskId'] = new_task_id
 
-  updated_tasks
+  allTasks[new_task_id] = task_details
+  tasks_to_file( allTasks )
+
+  allTasks
 end
 
 def tasks_from_file
