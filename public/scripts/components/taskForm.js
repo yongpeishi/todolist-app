@@ -14,7 +14,7 @@ var TaskForm = React.createClass({
 
     if(trimmedText) {
       this.props.onTaskSubmit({text: trimmedText});
-      this.setState({text: ""});
+      this.setState({text: ''});
     }
   },
 
