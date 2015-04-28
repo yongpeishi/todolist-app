@@ -3,8 +3,7 @@ var _ = require('underscore');
 var TaskList = require('./taskList');
 var TaskForm = require('./taskForm');
 
-var TaskBox = React.createClass({
-  displayName: 'TaskBox',
+var TaskBox = React.createClass({ displayName: 'TaskBox',
   loadTasksFromServer: function() {
     $.ajax({
       url: this.props.tasksUrl + '/tasks.json',
@@ -24,7 +23,7 @@ var TaskBox = React.createClass({
       dataType: 'json',
       type: 'POST',
       data: JSON.stringify(newTask),
-      success: function(data) {
+      success: function() {
         this.loadTasksFromServer();
       }.bind(this),
       error: function(xhr, status, err) {
@@ -56,7 +55,7 @@ var TaskBox = React.createClass({
     });
   },
 
-  getInitialState: function() { //execute exactly once during the lifecycle of the component
+  getInitialState: function() { 
     return { data: this.loadTasksFromServer() };
   },
 
@@ -65,9 +64,9 @@ var TaskBox = React.createClass({
     var completedTasks = _.values(this.state.data).filter( function(task) {return task.isCompleted;});
 
     return (
-      React.createElement('div', {className: "taskBox"},
-        React.createElement('h1', null, "Tasks"),
-        React.createElement('span', null, "Completed Tasks: " + completedTasks.length),
+      React.createElement('div', {class: 'tasksBox'},
+        React.createElement('h1', {}, "Tasks"),
+        React.createElement('span', {}, "Completed Tasks: " + completedTasks.length),
 
         React.createElement(TaskList, { data: this.state.data, toggleTaskCompletion: this.updateTaskCompletion }),
         React.createElement(TaskForm, { onTaskSubmit: this.handleTaskSubmit })

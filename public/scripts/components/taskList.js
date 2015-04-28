@@ -1,5 +1,4 @@
 var _ = require('underscore');
-
 var Task = require('./task');
 
 var TaskList = React.createClass({
@@ -14,7 +13,11 @@ var TaskList = React.createClass({
       });
     });
 
-    return React.createElement('div', {className: 'taskList'}, taskNodes);
+    return React.createElement('div', {
+      class: 'taskList',
+      style: { padding: 10 }
+    }, 
+    taskNodes);
   }
 });
 

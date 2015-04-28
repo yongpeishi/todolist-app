@@ -13,7 +13,7 @@ var Task = React.createClass({
 
   render: function() {
     return (
-      React.DOM.div({className: 'task' },
+      React.DOM.div({class: 'task' },
         React.DOM.input({
           type: 'checkbox',
           name: 'task-completed',

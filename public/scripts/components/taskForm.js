@@ -1,6 +1,6 @@
 var TaskForm = React.createClass({
   getInitialState: function() {
-      return {text: ""};
+      return {text: ''};
   },
 
   setText: function(e) {
@@ -20,7 +20,7 @@ var TaskForm = React.createClass({
 
   render: function() {
     return (
-      React.DOM.form( {className: "taskForm", onSubmit: this.handleSubmit},
+      React.DOM.form( {class: 'taskForm', onSubmit: this.handleSubmit},
         React.DOM.input( {type: 'text', value: this.state.text, onChange: this.setText}),
         React.DOM.input( {type: 'submit', value: 'Add task'})
       )
