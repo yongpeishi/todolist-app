@@ -6,7 +6,7 @@ var TaskList = React.createClass({
   render: function() {
     var tl = this;
 
-    var taskNodes = _.values(this.props.data).map(function(task) {
+    var taskNodes = _.values(this.props.allTodos).map(function(task) {
       return React.createElement(Task, {
         task: task,
         toggleTaskCompletion: tl.props.toggleTaskCompletion

@@ -9,7 +9,7 @@ var TaskBox = React.createClass({ displayName: 'TaskBox',
       url: this.props.tasksUrl + '/tasks.json',
       dataType: 'json',
       success: function(data) {
-        this.setState({data: data});
+        this.setState({allTodos: data});
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
@@ -56,19 +56,19 @@ var TaskBox = React.createClass({ displayName: 'TaskBox',
   },
 
   getInitialState: function() { 
-    return { data: this.loadTasksFromServer() };
+    return { allTodos: this.loadTasksFromServer() };
   },
 
   render: function() {
 
-    var completedTasks = _.values(this.state.data).filter( function(task) {return task.isCompleted;});
+    var completedTasks = _.values(this.state.allTodos).filter( function(task) {return task.isCompleted;});
 
     return (
       React.createElement('div', {class: 'tasksBox'},
         React.createElement('h1', {}, "Tasks"),
         React.createElement('span', {}, "Completed Tasks: " + completedTasks.length),
 
-        React.createElement(TaskList, { data: this.state.data, toggleTaskCompletion: this.updateTaskCompletion }),
+        React.createElement(TaskList, { allTodos: this.state.allTodos, toggleTaskCompletion: this.updateTaskCompletion }),
         React.createElement(TaskForm, { onTaskSubmit: this.handleTaskSubmit })
       )
     );
