@@ -1,0 +1,18 @@
+Explaination on React related codes:
+
+1. index.html // have a DOM element which you can load react element on to
+2. main.js // React.render() renders a reactElement to that DOM element
+3. taskBox.js
+	- define a component by React.createClass()
+    - render() return single element
+    - define an instance of a component by React.createElement()
+    - taskBox has 3 responsibilities: 
+        - stores data
+        - talks to the server
+        - render the components underneath it
+4. taskList.js
+    - element properties, inline style example
+5. task.js
+ 	- input box, onChange event
+6. taskForm.js
+    - state
